@@ -5,10 +5,11 @@ services:
   - docker
   - mongodb
 
-# addons:
-#   sonarcloud:
-#     organization: "ljd1987-github"
-#     token: "${SONAR_TOKEN}"
+addons:
+  sonarcloud:
+    organization: "ljd1987-github"
+    token:
+      secure: "BiGvE/GFen3J+SXF2nKVvOvZNKdnuWQK+V6o1IoWzsYJCwZW6f3xd8Mw4IEe8ZGDmEaaZTcSdsWO2yj46lXhvc66SQDpHkgHDuXd79bxX7xO4TLp1kGQjDsIeBqvdDUi+8VEOgl5NXVmgwWYvvQpgO8+FbVk26tCm8HwtVr0lFFlR8aXnxIPYWEra9D/x6gXqoC0h56VOSBSVBcR+fVAnjJ6McqVDWLri8ojiQteUNCvdeM4ZOYeIiUyJxpNVBejAjqO/L+xm0XS46x6i1wLoeOmRCWrgKdw7TnQAexh4V2IGGjHNrOTLHeGiY9a+kKjbYKYqVS+FPTM0f4QAvYD+RG4biXdcWuSdS3O+QJbnIA0xdmp6yEzL6Dc6QbM+meZyMTvtHXgq+YGj3r+64o71l7CuTLXxVJ9KPr5CU/tLEa/Zk134C1br6QRU0VM3/lCJ+S39HP6oKfUTPRDYG/9Bjqc6Ya0uEOQgumYhsP76umNSvB11l2ImmAezOXcqGWOgEijb+f/IpYmKFzM8wPjG3qF99ZXBhdV7Ofy0XToJtcNm2SSvZbwwYEqqvO9NUQ9TSRGQZrPFG6S/O+u9S6B+YI6r79bxC7IECruyOzWQjxCyED3cDRRPp0OS7+dkUu3TwdbPltiJdbfpWFsA3VxxMiR+vXJ0JtNSC4imbC/82A="
 
 jdk:
   - oraclejdk8
@@ -22,7 +23,7 @@ script:
   #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar  
   - set -ex
   - echo "SONAR = ${SONAR_TOKEN}"
-  - mvn clean install sonar:sonar -Dsonar.organization=ljd1987-github   -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=${SONAR_TOKEN}
+  - mvn clean install sonar:sonar
   - cp target/phonebook.war image/
   - docker build -t ljd1987/phonebook image/
   - docker push ljd1987/phonebook
