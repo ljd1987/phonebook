@@ -1,0 +1,165 @@
+swagger: '2.0'
+
+info:
+  version: "1.0"
+  title: Phonebook API
+  description: A simple phonebook api
+  
+basePath: /api/v1
+
+paths:
+  /contacts:
+    post:
+      tags:
+          - Contacts
+      summary: Create a new contact
+      description: Creates a new contact resource
+      parameters: 
+        - name: Contact
+          in: body
+          description: the JSON representation of the new contact.
+          required: true
+          schema:
+            $ref: '#/definitions/ContactCreateRequest'
+      responses:
+        '201':
+          description: The contact was created successfully
+          schema:
+            $ref: '#/definitions/Contact'
+    
+    get:
+      tags:
+        - Contacts
+      summary: Returns a list of contacts
+      parameters: 
+        - $ref: '#/parameters/_offset'
+        - $ref: '#/parameters/_limit'
+      responses:
+        '200':
+          description: a page of contacts
+          schema:
+            $ref: '#/definitions/ContactListResponse'
+          
+  /contacts/{contactId}:
+    get:
+      tags:
+        - Contacts
+      summary: Returns a specific contact
+      parameters: 
+        - $ref: '#/parameters/contactIdPathParam'
+      responses:
+        '200':
+          description: a contact
+          schema: 
+            $ref: '#/definitions/Contact'
+    put:
+      tags:
+        - Contacts
+      summary: Update a specific contact
+      parameters: 
+        - $ref: '#/parameters/contactIdPathParam'
+        - name: Contact
+          in: body
+          description: The JSON representation of a Contact
+          required: true
+          schema:
+            $ref: '#/definitions/Contact'
+      responses:
+        '200':
+          description: a contact
+          schema: 
+            $ref: '#/definitions/Contact'
+    delete:
+      tags:
+        - Contacts
+      summary: Delete a specific Contact
+      description: Deletes the Contact with the specified id.
+      parameters: 
+        - $ref: '#/parameters/contactIdPathParam'
+      responses:
+        '204':
+          description: The Contact was successfully deleted
+    
+            
+################################################################################
+# Parameters
+################################################################################
+parameters:
+
+  _offset:
+    name: _offset
+    in: query
+    description: number of records to skip when paging
+    type: number
+    minimum: 0
+    default: 0
+
+  _limit:
+    name: _limit
+    in: query
+    description: maximum number of records to return when paging
+    type: number
+    minimum: 1
+    maximum: 100
+    default: 25
+
+  contactIdPathParam:
+    name: contactId
+    in: path
+    type: string
+    minLength: 36
+    maxLength: 36
+    format: uuid    
+    description: Contact Id
+    required: true
+
+################################################################################
+# Definitions
+################################################################################
+definitions:
+  PhoneNumber:
+    required: 
+      - type
+      - number
+    properties:
+      type:
+        type: string
+        description: an identifier for the type of phone number
+      number:
+        type: string
+        description: a phone number
+
+  ContactCreateRequest:
+    required: 
+      - firstName
+    properties:
+      firstName:
+        type: string
+      lastName:
+        type: string
+        
+  Contact:
+    required: 
+      - firstName
+    properties:
+      id:
+        type: string
+        format: uuid
+        description: a unique identifier for the contact
+      firstName:
+        type: string
+      lastName:
+        type: string
+        
+  ContactListResponse:
+    type: object
+    properties:
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/Contact'
+      totalCount:
+        type: number
+        description: total number of results available for paging
+
+
