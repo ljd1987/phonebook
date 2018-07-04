@@ -28,5 +28,11 @@ script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
   - cp target/phonebook.war image/
   - docker build -t ljd1987/phonebook image/
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push ljd1987/phonebook
+  # - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  # - docker push ljd1987/phonebook
+
+deploy:
+  provider: script
+  script: bash docker_push.sh
+  on:
+    branch: master
