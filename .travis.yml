@@ -3,6 +3,7 @@ sudo: required
 
 services:
   - docker
+  - mongodb
 
 # addons:
 #   sonarcloud:
@@ -12,6 +13,10 @@ services:
 
 jdk:
   - oraclejdk8
+
+cache:
+  directories:
+    - '$HOME/.m2/repository'
 
 script:
   # JaCoCo is used to have code coverage, the agent has to be activated
