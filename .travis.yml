@@ -5,10 +5,10 @@ services:
   - docker
   - mongodb
 
-addons:
-  sonarcloud:
-    organization: "ljd1987-github"
-    token: "${SONAR_TOKEN}"
+# addons:
+#   sonarcloud:
+#     organization: "ljd1987-github"
+#     token: "${SONAR_TOKEN}"
 
 jdk:
   - oraclejdk8
@@ -21,7 +21,7 @@ script:
   # JaCoCo is used to have code coverage, the agent has to be activated
   #- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar  
   - set -ex
-  - mvn clean install sonar:sonar
+  - mvn clean install sonar:sonar -Dsonar.organization=ljd1987-github   -Dsonar.host.url=https://sonarcloud.io   -Dsonar.login=${SONAR_TOKEN}
   - cp target/phonebook.war image/
   - docker build -t ljd1987/phonebook image/
   - docker push ljd1987/phonebook
