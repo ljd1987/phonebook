@@ -15,7 +15,7 @@ public class ServiceUtils {
         // not meant to be instantiated
     }
 
-    private static AtomicReference<PhonebookService> phonebookService = new AtomicReference<PhonebookService>(null);
+    private static AtomicReference<PhonebookService> phonebookService = new AtomicReference<>(null);
     
     
     public static PhonebookService getPhonebookService() {
