@@ -6,12 +6,6 @@ services:
   - docker
   - mongodb
 
-env:
-  - DOCKER_USERNAME:
-    secure: "tqV6QOhFaiZU06JHQZgtFEv+ZllwIBG87WJCafhY7LVpa5f7IoyYOhou2rqeU4E7Ca2a24EcrUA9FEl9ztS1NHg6MIigAlS7Nnb8MH0wKDjGYOifOVE+1fe6FaCVk92obazqZpvPo5UQ276GYAOKkbGD3a4JZvf6ZTTIa22eJ6vSDK3z5cHOwKVw+SHG4BLDExiT/eATyl2d3kyqTC3Kl/xvyZDhpB5jMJ74mmJxTHFmeYQcUwPkp0731YqbvYr060neR57Z4lSwkJr1wXFJpK0w9i1+Hl4YJ358mw4j/eNrPYZoU0e6GU5M6Zaz01QgT0MB1n6oUEfINPd1hIvY3kqVqW4we0tBSTxZyrUzL89fN8k6wrdlzEPVJyrDshPGsC88WhhZ9qwY697VWXWhf4+8rh8XRcvIoXvkfvuHqzdE66BBYp4mqUl/xLj6ROkO/MXlodzRufjojHBtLcPFBBB14c2NNI8ZVXi4nsruxmHk1LDW2akCsG3au51y29pKVHdVUi6IS+VpQZ5ThHo3lo9+Wu6Xi8C0NsudHTlpyJSDIlqiKtEpJJH6JhinJO+Q/YbXuHxCAjVaYa7s4tCGN35pgMXXda9N8gH1/tKuvKeztj+KfiuhtIdhDNPGly38d50bgOTT2ACPzCGZJDGNJDG5QOa5Yb+UF/AhMdcBb8s="
-  - DOCKER_PASSWORD:
-    secure: "l+htsTHXBNNw1PdMXFnIvUOE6E4+J7R6rlaY9j0WIvKRdmk01Vj9PMO7D9H/TwtBKkPwIy3WaoKfTfSFHNHvmgvcFK+6Az0RzmLlEklMdPz1b/5aXqX6YZDADlhlcmljc35JpZktfInVfqmCZwbCP3sDYH0bop8OVI02hkIAMHHTharIaAki2a6AmPuWhi3k06D+BE2AlTUHViEkB1QScAs72MF7wLMwe3PooHzSDBeqf0/EuYgZtmsnuXOL+C2xCAD87kcGoDMuD0ULYb4ZdYmQunieicgrkTy9BtHbKJnD+/e9NVMWx1RcqB1qfrBwQRN5RJFk9saRFRZBPhkWEVlzYPaE2OGob6nXXOne66tFvdKJeYHRowSq7+F2eNJ+EBnwryztumwWNsRPy8fkG413csLCOZlpoVpSKDLhA3GTo7+Dfbj0mWtyMgYjQ9xC7ABePhIT9QfSC8XArwF7dLbAMvodacjYYpHqaoIppBZlwmDixaPDut15kgNb29UpPjGJFctLUR44t/9OT1ZNhdr2BWhoVx/8sufqzSuyMwEeDdqNgm6f9fJEbRqD2QR5kLFh23byNlzuM9GifzpCBY3i18IlEm41ynIhimkp1zp2E+8IXg1szO/TtuU7ilhUHmheb9d8lp7HLSIIdmpYLOaTdpJukN0v0JxOG3v8kgM="  
-
 addons:
   sonarcloud:
     organization: ljd1987-github
@@ -30,8 +24,6 @@ script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
   - cp target/phonebook.war image/
   - docker build -t ljd1987/phonebook image/
-  # - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
-  # - docker push ljd1987/phonebook
 
 deploy:
   provider: script
