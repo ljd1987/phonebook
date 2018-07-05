@@ -3,11 +3,11 @@
 
     <!-- Enable features -->
     <featureManager>
-        <feature>jaxrs-2.0</feature>
+        <feature>jaxrs-2.1</feature>
 		<feature>jndi-1.0</feature>
 		<feature>localConnector-1.0</feature>
-		<feature>restConnector-1.0</feature>
-        <feature>jwt-1.0</feature>
+		<feature>restConnector-2.0</feature>        
+        <feature>beanValidation-2.0</feature>
     </featureManager>
 
     <!-- This template enables security. To get the full use of all the capabilities, a keystore and user registry are required. -->
@@ -26,6 +26,17 @@
     <basicRegistry id="basic" realm="BasicRealm">
         <user name="admin" password="admin" />
     </basicRegistry>
+
+    <logging 
+        consoleLogLevel="INFO" 
+        logDirectory="${server.output.dir}/logs" 
+        maxFileSize="20" 
+        maxFiles="5" 
+        messageFileName="messages.log" 
+        traceFileName="trace.log" 
+        traceFormat="ENHANCED" 
+        traceSpecification="com.ljd.*=info"
+    />	
 
     <!-- To allow access to this server from a remote client host="*" has been added to the following element -->
     <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443" />

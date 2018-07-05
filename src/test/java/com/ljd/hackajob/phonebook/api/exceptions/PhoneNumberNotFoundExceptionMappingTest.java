@@ -1,20 +1,19 @@
 package com.ljd.hackajob.phonebook.api.exceptions;
 
-import java.util.UUID;
-
 import javax.ws.rs.core.Response.Status;
 
-import com.ljd.hackajob.phonebook.model.exceptions.ContactNotFoundException;
 import com.ljd.hackajob.phonebook.model.exceptions.Messages;
+import com.ljd.hackajob.phonebook.model.exceptions.PhoneNumberNotFoundException;
 import com.ljd.hackajob.phonebook.model.exceptions.PhonebookException;
+import com.ljd.hackajob.phonebook.util.TestUtils;
 
-public class ContactNotFoundExceptionMappingTest extends PhonebookExceptionMapperTest {
-    
-    private UUID id = UUID.randomUUID();        
+public class PhoneNumberNotFoundExceptionMappingTest extends PhonebookExceptionMapperTest {
+
+    private String type = TestUtils.generateRandomAlphanumericString(8);
 
     @Override
     protected PhonebookException getException() {
-        return new ContactNotFoundException(id);
+        return new PhoneNumberNotFoundException(type);
     }
 
     @Override
@@ -24,12 +23,12 @@ public class ContactNotFoundExceptionMappingTest extends PhonebookExceptionMappe
 
     @Override
     protected String getExpectedMsgId() {
-        return Messages.PBE0001;
+        return Messages.PBE0002;
     }
 
     @Override
     protected String getExpectedMessage() {
-        return String.format("PBE0001: No Contact found with id '%s'", id.toString());
+        return String.format("PBE0002: No Phone Number found with type '%s'", type);
     }
 
 }

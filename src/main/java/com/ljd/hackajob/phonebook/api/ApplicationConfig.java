@@ -15,6 +15,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.JacksonAnnotationIntrospector;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.ljd.hackajob.phonebook.api.exceptions.ConstraintViolationExceptionMapper;
+import com.ljd.hackajob.phonebook.api.exceptions.LastDitchExceptionMapper;
+import com.ljd.hackajob.phonebook.api.exceptions.PhonebookExceptionMapper;
 
 @ApplicationPath("/api/v1")
 public class ApplicationConfig extends Application {
@@ -26,6 +29,11 @@ public class ApplicationConfig extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> classes = new HashSet<>();
         classes.add(ContactsAPI.class);
+        classes.add(PhoneNumbersAPI.class);
+        
+        classes.add(PhonebookExceptionMapper.class);
+        classes.add(ConstraintViolationExceptionMapper.class);
+        classes.add(LastDitchExceptionMapper.class);
         return classes;
     }
 

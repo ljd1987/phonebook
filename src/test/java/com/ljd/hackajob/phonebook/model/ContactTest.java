@@ -99,7 +99,7 @@ public class ContactTest extends ModelTest {
         String json = mapper.writeValueAsString(contact);
         assertTrue(json.contains(id.toString()));
         assertTrue(json.contains(firstName));
-        assertTrue(json.contains(lastName));
+        assertTrue(json.contains(lastName));        
     }
     
     @Test

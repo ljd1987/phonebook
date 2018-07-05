@@ -30,6 +30,13 @@ public class PhoneNumberTest extends ModelTest {
     }
     
     @Test
+    public void testSetNumber() {
+        String newNumber = generateRandomNumericString(12);
+        phoneNumber.setNumber(newNumber);
+        assertEquals(newNumber, phoneNumber.getNumber());
+    }
+    
+    @Test
     public void testSerialisation() throws Exception {
         String json = mapper.writeValueAsString(phoneNumber);
         assertTrue(json.contains(type));

@@ -1,7 +1,5 @@
 package com.ljd.hackajob.phonebook.api.exceptions;
 
-import java.io.IOException;
-
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -17,9 +15,8 @@ public class PhonebookExceptionMapper implements javax.ws.rs.ext.ExceptionMapper
                     exception.getMessageBundle(),
                     exception.getMessageKey(),
                     exception.getMessageInserts());
-        } catch (IOException e) {
+        } catch (Exception e) {
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
 }

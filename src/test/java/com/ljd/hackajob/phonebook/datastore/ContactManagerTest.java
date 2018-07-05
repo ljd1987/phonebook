@@ -34,8 +34,7 @@ public class ContactManagerTest extends MongoTest {
 
     @Test
     public void testCreateContact() throws Exception {
-        Contact created = mgr.createContact(contactToCreate);
-
+        Contact created = mgr.createContact(contactToCreate);        
         assertEquals(contactToCreate.getFirstName(), created.getFirstName());
         assertEquals(contactToCreate.getLastName(), created.getLastName());
     }

@@ -44,30 +44,38 @@ public class ContactsAPI {
         LOG.logp(Level.INFO, CLASS, METHOD, "Request: {0}", contact.toString());
         ContactManager mgr = ServiceUtils.getPhonebookService().getContactManager();
         Contact created = mgr.createContact(contact);
-        
+
         LOG.logp(Level.INFO, CLASS, METHOD,"Created: {0}", created.toString());
         return Response.created(URI.create(info.getRequestUri() + "/" + created.getId().toString())).entity(created).build();
     }
-    
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllContacts(
-            @Min(value=0) @QueryParam("_offset") int offset,
-            @Min(value=1) @Max(value=100)@QueryParam("_limit") int limit) {
+            @Min(value=0, message="{VER0200}") @QueryParam("_offset") Integer offset,
+            @Min(value=1, message="{VER0201}") @Max(value=100, message="{VER0201}") @QueryParam("_limit") Integer limit) {
+        if (offset == null) {
+            offset = 0;
+        }
+
+        if (limit == null) {
+            limit = 25;
+        }
+
         ContactManager mgr = ServiceUtils.getPhonebookService().getContactManager();
         Page<Contact> page = mgr.getContacts(offset, limit);
         return Response.ok(page).build();
     }
-    
+
     @GET
     @Path("/{contactId}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getContact(@PathParam("contactId") UUID contactId) throws PhonebookException {        
+    public Response getContact(@PathParam("contactId") UUID contactId) throws PhonebookException {
         final String METHOD = "getContact";
         LOG.logp(Level.INFO, CLASS, METHOD, "Get contact {0}", contactId);
-        return Response.ok(ServiceUtils.getPhonebookService().getContactManager().getContact(contactId)).build();        
+        return Response.ok(ServiceUtils.getPhonebookService().getContactManager().getContact(contactId)).build();
     }
-    
+
     @PUT
     @Path("/{contactId}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -79,7 +87,7 @@ public class ContactsAPI {
         Contact updated = mgr.updateContact(contactId, updates);
         return Response.ok(updated).build();
     }
-    
+
     @DELETE
     @Path("/{contactId}")
     public Response deleteContact(@PathParam("contactId") UUID contactId) throws PhonebookException {
