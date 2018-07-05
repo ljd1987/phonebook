@@ -85,7 +85,7 @@ Creating phonebook_tests_1     ... done
 
 4. After a few moments the api should be available.  I am using `docker-machine` and in my case the API documentation is now available from http://192.168.99.100/
 
-![Image of Swagger UI](https://github.com/ljd1987/phonebook/tree/master/images/docs.png)
+![Image of Swagger UI](https://github.com/ljd1987/phonebook/blob/master/images/docs.png?raw=true)
 
 5. You can use the Swagger UI to experiment with the API.  First, you will need to authorize by clicking on the green "Authorize" button in the top right.  The api supports basic authentication, and there is a single test user:
 
@@ -96,8 +96,8 @@ password: admin
 
 6. To use the Swagger UI to experiment with the API, expand the relevant method and click on the "Try it out" button to open a request panel, and then click on "Execute" once you are happy with the request details:
 
-![try it out](https://github.com/ljd1987/phonebook/tree/master/images/tryitout.png)
+![try it out](https://github.com/ljd1987/phonebook/blob/master/images/tryitout.png?raw=true)
 
-![execute](https://github.com/ljd1987/phonebook/tree/master/images/execute.png)
+![execute](https://github.com/ljd1987/phonebook/blob/master/images/execute.png?raw=true)
 
-![response](https://github.com/ljd1987/phonebook/tree/master/images/response.png)
+![response](https://github.com/ljd1987/phonebook/blob/master/images/response.png?raw=true)
