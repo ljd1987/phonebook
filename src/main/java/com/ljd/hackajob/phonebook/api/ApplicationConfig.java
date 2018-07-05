@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
@@ -20,6 +21,7 @@ import com.ljd.hackajob.phonebook.api.exceptions.LastDitchExceptionMapper;
 import com.ljd.hackajob.phonebook.api.exceptions.PhonebookExceptionMapper;
 
 @ApplicationPath("/api/v1")
+@RolesAllowed("user")
 public class ApplicationConfig extends Application {
 
     public static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");

@@ -7,6 +7,13 @@ info:
   
 basePath: /api/v1
 
+securityDefinitions:
+  basicAuth:
+    type: basic
+
+security: 
+ - basicAuth: []
+
 paths:
   /contacts:
     post:

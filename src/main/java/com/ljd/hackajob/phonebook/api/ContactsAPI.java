@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -29,6 +30,7 @@ import com.ljd.hackajob.phonebook.model.Page;
 import com.ljd.hackajob.phonebook.model.exceptions.PhonebookException;
 
 @Path("/contacts")
+@RolesAllowed("user")
 public class ContactsAPI {
     private static final String CLASS = ContactsAPI.class.getName();
     private static final Logger LOG = Logger.getLogger(CLASS);
