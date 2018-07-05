@@ -10,6 +10,55 @@ simple phonebook REST API
 [![Reliability](https://sonarcloud.io/api/project_badges/measure?project=com.ljd.hackajob%3Aphonebook&metric=reliability_rating)](https://sonarcloud.io/component_measures?id=com.ljd.hackajob%3Aphonebook&metric=Reliability)
 [![Security](https://sonarcloud.io/api/project_badges/measure?project=com.ljd.hackajob%3Aphonebook&metric=security_rating)](https://sonarcloud.io/component_measures?id=com.ljd.hackajob%3Aphonebook&metric=Security)
 
+## Model
+
+There are two resources in this simple phone book api: `Contact` and `PhoneNumber`.
+
+A `Contact` has the following JSON representation:
+
+```json
+{
+    "id" : "e1300cbc-e73f-4fb3-a0a8-298e8a577802",
+    "firstName" : "John",
+    "lastName" : "Smith",
+    "links" : {
+        "phoneNumbers" : "api/v1/contacts/e1300cbc-e73f-4fb3-a0a8-298e8a577802/phonenumbers"
+    }
+}
+```
+
+A `PhoneNumber` has the following JSON representation:
+
+```json
+{
+    "type" : "iPhone",
+    "number" : "07875236355",
+    "links" : {
+        "contact" : "api/v1/contacts/e1300cbc-e73f-4fb3-a0a8-298e8a577802"
+    }
+}
+```
+
+- A `Contact` is uniquely identified by `{contactId}` (its `id` field)
+- Only the `firstName` field of a Contact is required.
+- Both `firstName` and `lastName` of a `Contact` can be updated (but only the `lastName` can be removed)
+- A `Contact` can have **0 or more `PhoneNumbers`**
+- A `PhoneNumber` is uniquely identified by `{contactId}{type}`
+- A `PhoneNumber` is associated with **exactly 1 `Contact`**
+- Both the `type` field and `number` field are required on a `PhoneNumber`
+- Only the `number` field of a `PhoneNumber` can be updated
+
+## Build Pipeline
+
+Commits will trigger a Travis CI build that:
+
+- builds the `war` file and runs the `junit` tests
+- integrates with SonarCloud for source code analysis
+- builds a Docker image for the service
+- starts a container using the built image, (as well as a mongoDB container and a test container) using `docker-compose`
+- runs some functional tests against the running service container (using `newman` to execute a `postman` collection)
+- if the tests pass, the Docker image for the service is pushed to Docker hub
+
 ## Requirements
 
 To run the service locally, you will need `docker` and `docker-compose` available to your shell, and you need to be able to `docker pull` images from Docker Hub.
