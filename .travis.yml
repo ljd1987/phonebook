@@ -33,7 +33,7 @@ script:
 #####################################
 before_deploy:
   - set -e
-  - docker-compose -f docker-compose.test.yml up -d
+  - docker-compose up -d
   - sleep 30 # give it a little time, for the server to start etc
   - ./travisScripts/runFunctionalTests.sh
 
