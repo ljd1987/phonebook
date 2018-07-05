@@ -422,5 +422,3 @@ definitions:
       errorMessage:
         type: string
         example: "PBE0004: The request was invalid: '[VER0002: The type field cannot be null]'"
-
-

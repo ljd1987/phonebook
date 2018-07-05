@@ -18,6 +18,9 @@ cache:
   directories:
     - "$HOME/.m2/repository"
 
+#####################################
+# BUILD
+#####################################
 script:
   - set -e
   - echo $TRAVIS_BRANCH
@@ -25,8 +28,20 @@ script:
   - cp target/phonebook.war image/
   - docker build -t ljd1987/phonebook image/
 
+#####################################
+# FUNCTIONAL TESTS
+#####################################
+before_deploy:
+  - set -e
+  - docker-compose -f docker-compose.test.yml up -d
+  - sleep 30 # give it a little time, for the server to start etc
+  - ./travisScripts/runFunctionalTests.sh
+
+#####################################
+# PUSH DOCKER IMAGE
+#####################################
 deploy:
   provider: script
-  script: bash docker_push.sh
+  script: bash ./travisScripts/docker_push.sh
   on:
     branch: master

@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "685922a7-4320-408d-b9eb-7f5ddcb1cabd",
+		"name": "phonebookTests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createContact",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4b28a30f-9bbe-4508-9512-0318c9f8c5fc",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"var contactResponse = pm.response.json();",
+							"",
+							"pm.test(\"should have an id field as well as the name(s)\", function () {",
+							"    pm.expect(contactResponse.id).to.not.be.null;",
+							"    pm.expect(contactResponse.firstName).to.eql(\"Leo\");",
+							"    pm.expect(contactResponse.lastName).to.eql(\"Davison\");",
+							"});",
+							"",
+							"var theId = contactResponse.id;",
+							"",
+							"pm.globals.set(\"contactId\", theId);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"firstName\" : \"Leo\",\n\t\"lastName\" : \"Davison\"\n}"
+				},
+				"url": {
+					"raw": "http://phonebook:9080/api/v1/contacts",
+					"protocol": "http",
+					"host": [
+						"phonebook"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"v1",
+						"contacts"
+					]
+				},
+				"description": "Create a new contact"
+			},
+			"response": []
+		},
+		{
+			"name": "getContact",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d2d88c6a-d725-4dd7-8c1d-5935f9a1aa54",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var contactResponse = pm.response.json();",
+							"var contactId = pm.globals.get(\"contactId\");",
+							"",
+							"pm.test(\"should match the created contact\", function () {",
+							"    pm.expect(contactResponse.id).to.eql(contactId);",
+							"    pm.expect(contactResponse.firstName).to.eql(\"Leo\");",
+							"    pm.expect(contactResponse.lastName).to.eql(\"Davison\");",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://phonebook:9080/api/v1/contacts/{{contactId}}",
+					"protocol": "http",
+					"host": [
+						"phonebook"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"v1",
+						"contacts",
+						"{{contactId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllContacts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "57f5f072-aedc-4647-b495-a5df7af023d8",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var allContactsResponse = pm.response.json();",
+							"",
+							"pm.test(\"should have total count of 1\", function () {",
+							"    pm.expect(allContactsResponse.totalCount).to.eql(1);",
+							"});",
+							"",
+							"var results = allContactsResponse.results;",
+							"",
+							"pm.test(\"should have 1 result\", function () {",
+							"    pm.expect(results.length).to.eql(1);",
+							"});",
+							"",
+							"var theContact = results[0];",
+							"",
+							"pm.test(\"result should match the created contact\", function () {",
+							"    var contactId = pm.globals.get(\"contactId\");",
+							"    pm.expect(theContact.id).to.eql(contactId);",
+							"    pm.expect(theContact.firstName).to.eql(\"Leo\");",
+							"    pm.expect(theContact.lastName).to.eql(\"Davison\");",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://phonebook:9080/api/v1/contacts",
+					"protocol": "http",
+					"host": [
+						"phonebook"
+					],
+					"port": "9080",
+					"path": [
+						"api",
+						"v1",
+						"contacts"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,3 +1,5 @@
 /.apt_generated/
 /target/
 image/*.war
+functionalTests/newman/
+functionalTests/.DS_STORE
