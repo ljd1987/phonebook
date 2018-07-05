@@ -31,11 +31,6 @@ paths:
       responses:
         201:
           description: The contact was created successfully
-          examples: 
-            application/json:
-              id: e1300cbc-e73f-4fb3-a0a8-298e8a577802
-              firstName: John
-              lastName: Smith
           schema:
             $ref: '#/definitions/Contact'
         400:
@@ -157,13 +152,11 @@ paths:
           description: The JSON representation of a phone number
           required: true
           schema:
-            $ref: '#/definitions/PhoneNumber'
+            $ref: '#/definitions/PhoneNumberCreateRequest'
       responses:
         201:
-          examples: 
-            application/json:
-              type: iPhone
-              number: "07423678985"
+          schema:
+            $ref: '#/definitions/PhoneNumber'
           description: The phone number was successfully added to the contact
         400:
           description: Invalid request
@@ -348,6 +341,22 @@ parameters:
 # Definitions
 ################################################################################
 definitions:
+
+  PhoneNumberCreateRequest:
+    required: 
+      - type
+      - number
+    properties:
+      type:
+        type: string
+        description: an identifier for the type of phone number
+        example: iPhone
+      number:
+        type: string
+        description: a phone number
+        pattern: '\d{1,32}'
+        example: 07423678985
+
   PhoneNumber:
     required: 
       - type
@@ -356,13 +365,19 @@ definitions:
       type:
         type: string
         description: an identifier for the type of phone number
+        example: iPhone
       number:
         type: string
         description: a phone number
         pattern: '\d{1,32}'
-    example:
-      type: iPhone
-      number: 07423678985
+        example: 07423678985
+      links:
+        type: object
+        properties:
+          contact:
+            type: string
+            description: URI for the phone number sub-resources for this contact
+            example: "api/v1/contacts/e1300cbc-e73f-4fb3-a0a8-298e8a577802"
       
   PhoneNumberListResponse:
     type: object
@@ -397,10 +412,20 @@ definitions:
         type: string
         format: uuid
         description: a unique identifier for the contact
+        example: e1300cbc-e73f-4fb3-a0a8-298e8a577802
       firstName:
         type: string
+        example: John
       lastName:
         type: string
+        example: Smith
+      links:
+        type: object
+        properties:
+          phoneNumbers:
+            type: string
+            description: URI for the phone number sub-resources for this contact
+            example: "api/v1/contacts/e1300cbc-e73f-4fb3-a0a8-298e8a577802/phonenumbers"
         
   ContactListResponse:
     type: object
